@@ -5,9 +5,9 @@ public class Plant implements Organism {
     public static Object [][] ecoArray;
     public static int [] xPlant = new int[32];
     public static int [] yPlant = new int[32];
-    public static int usedArray = 0;
+    private static int usedArray = 0;
     public static int time = 1;
-    public final int initPop = 50;
+    public final int initPop = 100;
 
     public static int left = 0;
     public static int right = 0;
@@ -41,7 +41,7 @@ public class Plant implements Organism {
                 this.right++;
                 tryPlant(X - 1, Y);
             }else if((X + this.right + 1) <= 32){
-                tryPlant(X + + this.right + 1, Y);
+                tryPlant(X + this.right + 1, Y);
                 this.right = 0;
             }
         }
@@ -50,11 +50,15 @@ public class Plant implements Organism {
     public void addTime(){
         this.time++;
         grow();
+        eat();
     }
-
+    public int getPlantCount(){
+        return usedArray;
+    }
     @Override
     public void grow() {
-        if(this.time == 5 || this.time == 10 || this.time == 15 || this.time == 20 || this.time == 25 ||this.time == 30){
+        int rand = randGen();
+        if(rand > 30){
             for (int i = 0; i < usedArray ; i++) {
                 tryPlant(xPlant[i], yPlant[i]);
 
@@ -63,13 +67,14 @@ public class Plant implements Organism {
     }
 
     @Override
-    public void move(int[] ecoArray) {
-        //N/A
+    public void move() {
+        // N/A
     }
 
     @Override
-    public void eat(int[] ecoArray) {
-
+    public void eat() {
+        if(time <= DAY)
+            grow();
     }
 
     public int randGen(){

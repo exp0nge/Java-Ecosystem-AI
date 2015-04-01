@@ -4,13 +4,15 @@
 public class Main {
     public static void main(String[] args) {
         Ecosystem e1 = new Ecosystem();
-        e1.print();
-        System.out.println();
+        //e1.print();
+        //System.out.println();
         e1.addTime();
         e1.addTime();
-        e1.addTime();
-        e1.addTime();
-        e1.print();
+        //e1.addTime();
+        //e1.addTime();
+        //e1.print();
+        e1.getStats();
+
 
     }
 }
