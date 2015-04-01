@@ -3,8 +3,6 @@
  */
 public interface Organism {
     final static int DAY = 15;
-    final static int NIGHT = 16;
-    final static int minENERGY = 1;
 
     public void grow();
     public void move();
