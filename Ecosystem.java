@@ -59,8 +59,7 @@ public class Ecosystem {
         }
     }
     public void getStats(){
-        System.out.println("Plant pop.: " + p1.getPlantCount());
-        System.out.println("Herbivore pop.: " + h1.getHerbivoreCount());
+        System.out.println("Plants: " + p1.getPlantCount() + " Herbs: " + h1.getHerbivoreCount());
     }
     public int randGen(){
         int Random = (int)(Math.random()*32);

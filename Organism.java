@@ -6,5 +6,5 @@ public interface Organism {
 
     public void grow();
     public void move();
-    public void eat();
+    public void eat(int X, int Y, int orgIndex);
 }
