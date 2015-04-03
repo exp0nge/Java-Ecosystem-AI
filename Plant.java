@@ -8,7 +8,8 @@ public class Plant implements Organism {
     public static int [] yPlant = new int[MAX];
     public static int usedArray = 0;
     public static int time = 1;
-    public final int initPop = 500;
+    public final static int initPop = 500;
+
     public static int left = 0;
     public static int right = 0;
 
@@ -20,14 +21,15 @@ public class Plant implements Organism {
         tryPlant(initX, initY);
     }
 
-    private void tryPlant(int X, int Y){
+    private boolean tryPlant(int X, int Y){
         if(usedArray == MAX)
-            return;
+            return false;
         if (this.ecoArray[X][Y] == ".") {
             this.ecoArray[X][Y] = "~";
             this.xPlant[usedArray] = X;
             this.yPlant[usedArray] = Y;
             usedArray++;
+            return true;
         }else{
 
             if((Y - 1) >= 0) {
@@ -45,6 +47,7 @@ public class Plant implements Organism {
                 this.right = 0;
             }
         }
+        return false;
     }
 
     public void addTime(){
@@ -55,16 +58,12 @@ public class Plant implements Organism {
     public int getPlantCount(){
         return usedArray;
     }
-    public void lookAndDelete(){
-
-    }
     @Override
     public void grow() {
         int rand = randGen();
-        if(rand > 30 && time <= DAY){
+        if(time <= DAY){
             for (int i = 0; i < usedArray ; i++) {
                 tryPlant(xPlant[i], yPlant[i]);
-
             }
         }
     }
