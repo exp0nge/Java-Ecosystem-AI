@@ -9,9 +9,17 @@ import java.io.PrintStream;
 public class Main {
     public static void main(String[] args) {
         Ecosystem e1 = new Ecosystem();
-        for (int i = 0; i < 31; i++) {
-            if(i == 0)
-                continue;
+        e1.print();
+        for (int i = 0; i < 30; i++) {
+            e1.getStats();
+            e1.addTime();
+        }
+        System.out.println();
+        e1.print();
+
+    }
+    public static void printToFile(Ecosystem e1){
+        for (int i = 0; i < 30; i++) {
             String fileName = "C:\\Users\\unid\\SkyDrive\\Classes\\sftwre design lab\\HW4_Ecosystem\\src\\stages\\" + i + ".txt";
             try{
                 File file = new File(fileName);
@@ -27,10 +35,5 @@ public class Main {
 
             e1.addTime();
         }
-
-
-
-
-
     }
 }

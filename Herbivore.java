@@ -29,11 +29,13 @@ public class Herbivore implements Organism {
     private boolean tryHerbivore(int X, int Y){
         if(herbivoreCount == MAX)
             return false;
-        if (this.ecoArray[X][Y] == "." || this.ecoArray[X][Y] == "~") {
-            this.ecoArray[X][Y] = "&";
+        if (this.ecoArray[X][Y].equals(".") || this.ecoArray[X][Y].equals("~")) {
             this.herbivoreTracker[herbivoreCount] = this;
+            if(this.ecoArray[X][Y].equals("~"))
+                eat(X, Y, herbivoreCount);
             this.herbX[herbivoreCount] = X;
             this.herbY[herbivoreCount] = Y;
+            this.ecoArray[X][Y] = "&";
             herbivoreCount++;
             return true;
         }else{
@@ -96,7 +98,7 @@ public class Herbivore implements Organism {
     }
     private void moveHelper(int X, int Y, int j){
         if(Y-1 >= 0) {
-            if (ecoArray[X][Y - 1] == "." || ecoArray[X][Y - 1] == "~") {
+            if (ecoArray[X][Y - 1].equals(".") || ecoArray[X][Y - 1].equals("~")) {
                 int rand = randGen();
                 if(rand == 2) {
                     ecoArray[X][Y] = ".";
@@ -108,7 +110,7 @@ public class Herbivore implements Organism {
             }
 
         }else if(Y+1 <= 31) {
-            if (ecoArray[X][Y + 1] == "." || ecoArray[X][Y + 1] == "~") {
+            if (ecoArray[X][Y + 1].equals(".") || ecoArray[X][Y + 1].equals("~")) {
                 int rand = randGen();
                 if(rand == 2) {
                     ecoArray[X][Y] = ".";
@@ -119,7 +121,7 @@ public class Herbivore implements Organism {
                 }
             }
         }else if(X-1 >= 0) {
-            if (ecoArray[X - 1][Y] == "." || ecoArray[X - 1][Y] == "~") {
+            if (ecoArray[X - 1][Y].equals(".") || ecoArray[X - 1][Y].equals("~")) {
                 int rand = randGen();
                 if(rand == 2) {
                     ecoArray[X][Y] = ".";
@@ -130,7 +132,7 @@ public class Herbivore implements Organism {
                 }
             }
         }else if(X+1 <= 31) {
-            if (ecoArray[X + 1][Y] == "." || ecoArray[X + 1][Y] == "~") {
+            if (ecoArray[X + 1][Y].equals(".") || ecoArray[X + 1][Y].equals("~")) {
                 int rand = randGen();
                 if(rand == 2) {
                     ecoArray[X][Y] = ".";
@@ -148,21 +150,20 @@ public class Herbivore implements Organism {
             moveHelper(herbX[i], herbY[i], i);
         }
     }
-
     @Override
     public void eat(int X, int Y, int herbIndex) {
-        if(ecoArray[X][Y] == "~") {
+        if(this.ecoArray[X][Y].equals("~")) {
             herbivoreTracker[herbIndex].energy += 2;
-            int plantIndex = 0;
+
             for (int i = 0; i < Plant.usedArray; i++) {
                 if(Plant.xPlant[i] == X){
                     for (int j = 0; j < Plant.usedArray; j++) {
                         if(Plant.yPlant[j] == Y){
-                            plantIndex = j;
+                            int plantIndex = j;
                             System.arraycopy(Plant.xPlant, plantIndex + 1, Plant.xPlant, plantIndex, Plant.xPlant.length - 1 -plantIndex);
                             System.arraycopy(Plant.yPlant, plantIndex + 1, Plant.yPlant, plantIndex, Plant.yPlant.length - 1 -plantIndex);
                             Plant.usedArray--;
-                            break;
+                            return;
                         }
                     }
                 }

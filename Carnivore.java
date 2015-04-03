@@ -32,13 +32,13 @@ public class Carnivore implements Organism{
     private boolean tryCarnivore(int X, int Y){
         if(carnivoreCount == MAX)
             return false;
-        if (this.ecoArray[X][Y] == "." || this.ecoArray[X][Y] == "~" || this.ecoArray[X][Y] == "&") {
+        if (this.ecoArray[X][Y].equals(".") || this.ecoArray[X][Y].equals("~") || this.ecoArray[X][Y].equals("&")) {
             this.carnTracker[carnivoreCount] = this;
             this.carnX[carnivoreCount] = X;
             this.carnY[carnivoreCount] = Y;
-            if(this.ecoArray[X][Y] == "&")
+            if(this.ecoArray[X][Y].equals("&"))
                 eat(X, Y, carnivoreCount);
-            else if(this.ecoArray[X][Y] == "~")
+            else if(this.ecoArray[X][Y].equals("~"))
                 this.onPlant = true;
             this.ecoArray[X][Y] = "!";
             carnivoreCount++;
@@ -95,16 +95,16 @@ public class Carnivore implements Organism{
     }
     private void moveHelper(int X, int Y, int j){
         if(Y - 1 >= 0) {
-            if (ecoArray[X][Y - 1] == "." || ecoArray[X][Y - 1] == "~" || ecoArray[X][Y - 1] == "&") {
+            if (ecoArray[X][Y - 1].equals(".") || ecoArray[X][Y - 1].equals("~") || ecoArray[X][Y - 1].equals("&")) {
                 int rand = randGen();
                 if(rand == 2) {
                     if(this.carnTracker[j].onPlant == true)
                         ecoArray[X][Y] = "~";
                     else
                         ecoArray[X][Y] = ".";
-                    if(ecoArray[X][Y - 1] == "&")
+                    if(ecoArray[X][Y - 1].equals("&"))
                         eat(X, Y - 1, j);
-                    else if(ecoArray[X][Y - 1] == "~")
+                    else if(ecoArray[X][Y - 1].equals("~"))
                         removePlant(X, Y-1);
                     ecoArray[X][Y - 1] = "!";
                     carnY[j] -= 1;
@@ -114,16 +114,16 @@ public class Carnivore implements Organism{
 
         }
         if(Y+1 <= 31) {
-            if (ecoArray[X][Y + 1] == "." || ecoArray[X][Y + 1] == "~"|| ecoArray[X][Y + 1] == "&") {
+            if (ecoArray[X][Y + 1].equals(".") || ecoArray[X][Y + 1].equals("~")|| ecoArray[X][Y + 1].equals("&")) {
                 int rand = randGen();
                 if(rand == 2) {
                     if(this.carnTracker[j].onPlant == true)
                         ecoArray[X][Y] = "~";
                     else
                         ecoArray[X][Y] = ".";
-                    if(ecoArray[X][Y + 1] == "&")
+                    if(ecoArray[X][Y + 1].equals("&"))
                         eat(X, Y + 1, j);
-                    else if(ecoArray[X][Y + 1] == "~")
+                    else if(ecoArray[X][Y + 1].equals("~"))
                         removePlant(X, Y + 1);
                     ecoArray[X][Y + 1] = "!";
                     carnY[j] += 1;
@@ -132,16 +132,16 @@ public class Carnivore implements Organism{
             }
         }
         if(X-1 >= 0) {
-            if (ecoArray[X - 1][Y] == "." || ecoArray[X - 1][Y] == "~"|| ecoArray[X -1 ][Y] == "&") {
+            if (ecoArray[X - 1][Y].equals(".") || ecoArray[X - 1][Y].equals("~")|| ecoArray[X -1 ][Y].equals("&")) {
                 int rand = randGen();
                 if(rand == 2) {
                     if(this.carnTracker[j].onPlant == true)
                         ecoArray[X][Y] = "~";
                     else
                         ecoArray[X][Y] = ".";
-                    if(ecoArray[X - 1][Y] == "&")
+                    if(ecoArray[X - 1][Y].equals("&"))
                         eat(X - 1, Y, j);
-                    else if(ecoArray[X - 1][Y] == "~")
+                    else if(ecoArray[X - 1][Y].equals("~"))
                         removePlant(X - 1, Y);
                     ecoArray[X - 1][Y] = "!";
                     carnX[j] -= 1;
@@ -150,16 +150,16 @@ public class Carnivore implements Organism{
             }
         }
         if(X+1 <= 31) {
-            if (ecoArray[X + 1][Y] == "." || ecoArray[X + 1][Y] == "~"|| ecoArray[X + 1][Y] == "&") {
+            if (ecoArray[X + 1][Y].equals(".") || ecoArray[X + 1][Y].equals("~")|| ecoArray[X + 1][Y].equals("&")) {
                 int rand = randGen();
                 if(rand == 2) {
                     if(this.carnTracker[j].onPlant == true)
                         ecoArray[X][Y] = "~";
                     else
                         ecoArray[X][Y] = ".";
-                    if(ecoArray[X + 1][Y] == "&")
+                    if(ecoArray[X + 1][Y].equals("&"))
                         eat(X + 1, Y, j);
-                    else if(ecoArray[X + 1][Y] == "~")
+                    else if(ecoArray[X + 1][Y].equals("~"))
                         removePlant(X + 1, Y);
                     ecoArray[X + 1][Y] = "!";
                     carnX[j] += 1;
@@ -168,15 +168,15 @@ public class Carnivore implements Organism{
         }
     }
     private void removePlant(int X, int Y){
-        int plantIndex = 0;
         for (int i = 0; i < Plant.usedArray; i++) {
             if(Plant.xPlant[i] == X){
                 for (int j = 0; j < Plant.usedArray; j++) {
                     if(Plant.yPlant[j] == Y){
-                        plantIndex = j;
+                        int plantIndex = j;
                         System.arraycopy(Plant.xPlant, plantIndex + 1, Plant.xPlant, plantIndex, Plant.usedArray - 1 -plantIndex);
                         System.arraycopy(Plant.yPlant, plantIndex + 1, Plant.yPlant, plantIndex, Plant.usedArray - 1 -plantIndex);
                         Plant.usedArray--;
+                        return;
                     }
                 }
             }
